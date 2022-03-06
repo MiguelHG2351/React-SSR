@@ -15,3 +15,5 @@
 2. Configurar el servidor de express.
 
 3. Buscar un modulo para procesar imagenes. 
+# React-SSR
+Configurando un servidor de React para SSR y Utilizando webpack
