@@ -1,15 +1,7 @@
-const express = require('express');
-const middleware = require('webpack-hot-middleware');
-const webpack = require('webpack');
-const app = express()
-var ReactDOMServer = require('react-dom/server');
+require('@babel/core')
+require("@babel/register")({
+    presets: ['@babel/preset-env', '@babel/preset-react'],
+    plugins: ['@babel/transform-runtime']
+});
 
-const compiler = webpack(require('./webpack.config.js'));
-
-app.use(
-    middleware(compiler)
-)
-
-app.listen(3000, () => {
-    console.log('Listening on port 3000');
-})
+require('./server')

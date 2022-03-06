@@ -7,6 +7,6 @@ module.exports = {
     },
     commonPath: {
         entryApp: path.join(root, 'frontend'),
-        output: path.join(root, 'dist'),
+        output: path.join(root, 'dist', 'frontend'),
     }
 }

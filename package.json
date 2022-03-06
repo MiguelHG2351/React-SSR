@@ -5,15 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index",
-    "server:dev": "webpack serve --mode development",
-    "build:node": "babel index.js -d dist",
-    "build:server": "npm run build:node && nodemon dist/index.js",
-    "build": "webpack --mode production"
+    "server:webpack-dev": "webpack serve --mode development",
+    "start:dev": "nodemon server/index",
+    "build:front": "webpack --mode production -d ./"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.17.2",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -22,8 +23,10 @@
   "devDependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.5",
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "@babel/register": "^7.17.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "babel-loader": "^8.2.3",
     "compression-webpack-plugin": "^9.2.0",
