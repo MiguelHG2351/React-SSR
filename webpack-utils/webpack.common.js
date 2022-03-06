@@ -3,23 +3,39 @@ const { commonPath } = require('./common')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CSSMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 
 module.exports = {
   output: {
     // URL to the output directory resolved relative to the HTML page
     publicPath: '/',
     path: commonPath.output,
+    // para tener un nombre facil filename-sdasdsad.bundle.js
+    chunkFilename: '[name].bundle.js',
+    assetModuleFilename: 'assets/[name][ext]',
   },
   optimization: {
     minimize: true,
     minimizer: [
       new CSSMinimizerWebpackPlugin(),
-      new TerserPlugin()
+      new TerserPlugin(),
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminMinify,
+          options: {
+            plugins: [
+              ['optipng', { optimizationLevel: 5 }],
+            ],
+          }
+        },
+    }),
     ],
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
         commons: {
+        // Como en unix usan / en windows \ la REGEX es: [\\/]
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
           chunks: 'all',
           name: 'commons',
@@ -38,7 +54,6 @@ module.exports = {
           priority: 10,
         },
       }
-      // Como en unix usan / en windows \ la REGEX es: [\\/]
     }
   },
   module: {
@@ -59,6 +74,9 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].chunk.css',
+    }),
+    new WebpackManifestPlugin({
+      fileName: 'manifest.json',
     }),
   ]
 };

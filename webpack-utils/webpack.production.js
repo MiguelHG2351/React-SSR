@@ -38,7 +38,7 @@ module.exports = {
         new CompressioWebpackPlugin({
             algorithm: 'gzip',
             test: /\.js$|\.css$|\.html$/,
-            filename: '[path].gz[query]',
+            filename: '[path][base].gz[query]',
         }),
     ]
 }

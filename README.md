@@ -8,12 +8,14 @@
 
 4. React Fast Refresh GOD.
 
+5. Con webpack manifest plugin tienes un json con todos los archivos que se han cargado. Así sabes la url de cada archivo.
+
+
 # Falta:
 
-1. Dividir el js en chunks.
+1. Configurar el servidor de express.
 
-2. Configurar el servidor de express.
+2. Buscar un modulo para procesar imagenes. 
 
-3. Buscar un modulo para procesar imagenes. 
 # React-SSR
 Configurando un servidor de React para SSR y Utilizando webpack
