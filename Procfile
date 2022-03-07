@@ -1,1 +1,3 @@
-web: npm run build:front && npm start
+web:npm start
+
+release: npm run build:front
