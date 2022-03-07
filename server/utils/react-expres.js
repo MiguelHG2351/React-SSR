@@ -27,7 +27,7 @@ export function renderFullPage(html, manifest) {
       <!doctype html>
       <html>
         <head>
-          <title>Redux Universal Example</title>
+          <title>React Challenge :D | MiguelHG2351</title>
           <link rel="stylesheet" type="text/css" href="${mainCss}" />
           </head>
           <body>
