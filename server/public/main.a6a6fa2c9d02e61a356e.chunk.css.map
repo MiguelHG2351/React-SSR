@@ -1,1 +1,0 @@
-{"version":3,"file":"main.a6a6fa2c9d02e61a356e.chunk.css","mappings":"AAAA,QACI,sBAEA,wBACI","sources":["webpack://react-ssr-web/./frontend/style.scss"],"sourcesContent":[".header {\n    background-color: #09f;\n\n    .header-content {\n        padding: 1em;\n    }\n}"],"names":[],"sourceRoot":""}
