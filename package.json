@@ -7,7 +7,7 @@
     "start": "node server/index",
     "server:webpack-dev": "webpack serve --mode development",
     "start:dev": "nodemon server/index --ignore ./server/public",
-    "build:front": "webpack --mode production"
+    "build": "webpack --mode production"
   },
   "keywords": [],
   "author": "",
