@@ -1,20 +1,22 @@
 import React from 'react'
-import './style.scss'
+import { Route, Routes } from 'react-router-dom'
 
+import './style.scss'
 import Section from './Section'
+
+function Xd() {
+  return (
+    <div>
+      <h1>Xd</h1>
+    </div>    
+  )
+}
 
 export default function App() {
   return (
-    <html>
-      <head>
-        <title>Server Rendered App</title>
-      </head>
-      <header className='header'>
-        <div className="header-content">
-          <h1>Hello, world custom sus!</h1>
-        </div>
-        <Section />
-      </header>
-    </html>
+      <Routes>
+          <Route path='/' element={ <Section /> } />
+          <Route path='/xd' element={ <Xd /> } />
+      </Routes>
   )
 }

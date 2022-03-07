@@ -3,34 +3,18 @@ const app = express()
 import React from 'react'
 import { StaticRouter } from 'react-router-dom/server'
 import { renderToString } from 'react-dom/server'
-import App from '../frontend/';
-
+import path from 'path'
+import { getManifest, renderFullPage } from './utils/react-expres'
 
 require('dotenv').config();
-if(process.env.NODE_ENV === 'development') {
 
-    (async () => {
-        const middleware = (await import('webpack-dev-middleware')).default;
-        const webpack = (await import('webpack')).default;
-        const configWebpack = (await import('../webpack.config.js')).default(null, {
-            mode: process.env.NODE_ENV,
-        })
-        const compiler = webpack(configWebpack);
-        app.use(
-            middleware(compiler)
-        )
-    })()
-}
-
-app.get('*', (req, res) => {
-    let html = renderToString(
-        <StaticRouter location={req.url}>
-            <App />
-        </StaticRouter>
-    )
-
-    res.send('<!DOCTYPE html>' + html)
+app.use((req, res, next) => {
+    if(!req.hashManifest) {
+        req.hashManifest = getManifest()
+    }
+    next()
 })
+
 
 app.get('/testing', (req, res) => {
     res.json({
@@ -38,7 +22,20 @@ app.get('/testing', (req, res) => {
     })
 })
 
-app.use('/static', express.static('dist'))
+app.use(express.static(path.join(__dirname, 'public')))
+
+app.get('*', async (req, res) => {
+    const App = (await import('../frontend/App')).default
+
+    let html = renderToString(
+        <StaticRouter location={req.url}>
+            <App />
+        </StaticRouter>
+    )
+    const code = renderFullPage(html, req.hashManifest)
+
+    res.send(code)
+})
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');

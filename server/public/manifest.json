@@ -1,0 +1,11 @@
+{
+  "app.js": "/static/app-ed60389495525b464c54.bundle.js",
+  "app.css": "/app.22b72fbe460a41597a06.chunk.css",
+  "commons.js": "/assets/common.ca0155781bd5d0b8a5a7.js",
+  "vendors.js": "/assets/vendor.8af5f026df5475213897.js",
+  "index.html": "/index.html",
+  "app-bundle.js.map": "/static/app-ed60389495525b464c54.bundle.js.map",
+  "app.chunk.css.map": "/app.22b72fbe460a41597a06.chunk.css.map",
+  "common.js.map": "/assets/common.ca0155781bd5d0b8a5a7.js.map",
+  "vendor.js.map": "/assets/vendor.8af5f026df5475213897.js.map"
+}

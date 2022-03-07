@@ -7,6 +7,8 @@ module.exports = (_, args) => {
         throw new Error(`Mode parameter is invalid.`);
     }
     const modeConfig = require(`./webpack-utils/webpack.${args.mode}`);
-
-    return merge(common, modeConfig);
+    // console.log(modeConfig);
+    return merge(common, modeConfig({
+        mode: args.mode,
+    }));
 }

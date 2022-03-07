@@ -1,19 +1,19 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { commonPath } = require('./common')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CSSMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin');
-const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { commonPath } = require("./common");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CSSMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
 module.exports = {
   output: {
     // URL to the output directory resolved relative to the HTML page
-    publicPath: '/',
+    publicPath: "/",
     path: commonPath.output,
     // para tener un nombre facil filename-sdasdsad.bundle.js
-    chunkFilename: '[name].bundle.js',
-    assetModuleFilename: 'assets/[name][ext]',
+    chunkFilename: "[name].bundle.js",
+    assetModuleFilename: "assets/[name][ext]",
   },
   optimization: {
     minimize: true,
@@ -24,37 +24,35 @@ module.exports = {
         minimizer: {
           implementation: ImageMinimizerPlugin.imageminMinify,
           options: {
-            plugins: [
-              ['optipng', { optimizationLevel: 5 }],
-            ],
-          }
+            plugins: [["optipng", { optimizationLevel: 5 }]],
+          },
         },
-    }),
+      }),
     ],
     splitChunks: {
-      chunks: 'all',
+      chunks: "all",
       cacheGroups: {
         commons: {
-        // Como en unix usan / en windows \ la REGEX es: [\\/]
+          // Como en unix usan / en windows \ la REGEX es: [\\/]
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          chunks: 'all',
-          name: 'commons',
-          filename: 'assets/common.[chunkhash].js',
+          chunks: "all",
+          name: "commons",
+          filename: "assets/common.[chunkhash].js",
           reuseExistingChunk: true,
           enforce: true,
           priority: 20,
         },
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          chunks: 'all',
-          name: 'vendors',
-          filename: 'assets/vendor.[chunkhash].js',
+          chunks: "all",
+          name: "vendors",
+          filename: "assets/vendor.[chunkhash].js",
           reuseExistingChunk: true,
           enforce: true,
           priority: 10,
         },
-      }
-    }
+      },
+    },
   },
   module: {
     rules: [
@@ -66,17 +64,35 @@ module.exports = {
         test: /\.html$/i,
         loader: "html-loader",
       },
+      {
+        test: /\.s?css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './frontend/public/index.html',
+      template: "./frontend/public/index.html",
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].chunk.css',
+      filename: "[name].[contenthash].chunk.css",
     }),
     new WebpackManifestPlugin({
-      fileName: 'manifest.json',
+      fileName: "manifest.json",
     }),
-  ]
+  ],
 };
