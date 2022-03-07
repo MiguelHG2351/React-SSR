@@ -8,12 +8,33 @@ import { getManifest, renderFullPage } from './utils/react-expres'
 
 require('dotenv').config();
 
+if(process.env.NODE_ENV === 'development') {
+    try {
+        const webpack = require('webpack');
+        const webpackConfig = require('../webpack.config');
+        const webpackDevMiddleware = require('webpack-dev-middleware');
+        const webpackHotMiddleware = require('webpack-hot-middleware');
+        const compiler = webpack(webpackConfig(null, { mode: process.env.NODE_ENV }));
+        app.use(webpackDevMiddleware(compiler, {
+            serverSideRender: true,
+            writeToDisk: true,
+            publicPath: '/',
+        }));
+        app.use(webpackHotMiddleware(compiler, {
+            // evita el error de conección en modo desarrollo
+            path: '/__what',
+        }));
+    } catch(e) {
+        console.error(e);
+    }
+}
 app.use((req, res, next) => {
     if(!req.hashManifest) {
         req.hashManifest = getManifest()
     }
     next()
 })
+
 
 
 app.get('/testing', (req, res) => {
@@ -26,7 +47,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('*', async (req, res) => {
     const App = (await import('../frontend/App')).default
-
     let html = renderToString(
         <StaticRouter location={req.url}>
             <App />

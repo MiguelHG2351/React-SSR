@@ -2,16 +2,26 @@ import path from 'path'
 import fs from 'fs'
 // el manifest tiene las rutas de vendors y common
 export function renderFullPage(html, manifest) {
-  const main = manifest ? manifest['app.js'] : ''
-  const mainCss = manifest ? manifest['app.css'] : ''
+  const main = manifest ? manifest['main.js'] : ''
+  const mainCss = manifest ? manifest['main.css'] : ''
   const common = manifest ? manifest['commons.js'] : ''
   const vendor = manifest ? manifest['vendors.js'] : ''
+  const runtime = manifest ? manifest['runtime.js'] : ''
 
-  const scripts = `
-    <script src="${main}"></script>
-    <script src="${common}"></script>
-    <script src="${vendor}"></script>
+  let scripts = `
+    <script defer src="${main}"></script>
+    <script defer src="${common}"></script>
+    <script defer src="${vendor}"></script>
+    <script defer src="${runtime}"></script>
     `
+  if(process.env.NODE_ENV === 'development') {
+    const __what = manifest ? manifest['__what.js'] : ''
+
+    scripts += `
+      <script defer src="${__what}"></script>
+    `
+  }
+
 
     return `
       <!doctype html>
@@ -19,10 +29,9 @@ export function renderFullPage(html, manifest) {
         <head>
           <title>Redux Universal Example</title>
           <link rel="stylesheet" type="text/css" href="${mainCss}" />
-        </head>
-        <body>
+          </head>
+          <body>
           <div id="root">${html}</div>
-          <p>xd</p>
           ${scripts}
         </body>
       </html>

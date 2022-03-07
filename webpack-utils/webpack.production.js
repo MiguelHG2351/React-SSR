@@ -4,7 +4,7 @@ const { commonPath } = require("./common.js");
 module.exports = () => ({
     mode: 'production',
     entry: {
-        app: [`${commonPath.entryApp}/index.js`],
+        main: [`${commonPath.entryApp}/index.js`],
     },
     devtool: 'source-map',
     output: {

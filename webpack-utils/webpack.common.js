@@ -1,13 +1,15 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { commonPath } = require("./common");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CSSMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   output: {
+    // clean up the output directory before building
+    clean: true,
     // URL to the output directory resolved relative to the HTML page
     publicPath: "/",
     path: commonPath.output,
@@ -61,10 +63,6 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.html$/i,
-        loader: "html-loader",
-      },
-      {
         test: /\.s?css$/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -85,9 +83,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: "./frontend/public/index.html",
-    }),
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].chunk.css",
     }),

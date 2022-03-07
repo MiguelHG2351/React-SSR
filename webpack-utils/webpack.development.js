@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const { commonPath } = require("./common.js");
+const path = require("path");
 
 module.exports = (opts) => {
 
@@ -7,11 +8,10 @@ module.exports = (opts) => {
         target: ["web"],
         entry: {
             main:`${commonPath.entryApp}/index.js`,
-            vendor: ['webpack-hot-middleware/client?path=/__what&timeout=2000&overlay=false']
+            __what: 'webpack-hot-middleware/client?path=/__what&timeout=2000&overlay=false'
         },
         output: {
             filename: '[name]-[fullhash].bundle.js',
-            clean: true
         },
         devtool: 'inline-source-map',
         mode: "development",

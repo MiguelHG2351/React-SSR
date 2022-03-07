@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 
 export default function HeaderLeft() {
     return (
-      <div className="header">
+      <section className="header">
         <p>header izquierdo si</p>
-        <p>sus</p>
+        <p>sus 3</p>
         <Link to='/xd'>
           a XD
         </Link>
-      </div>
+      </section>
     )
   }
